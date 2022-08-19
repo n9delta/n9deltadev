@@ -8,6 +8,9 @@ const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAG
 const { Op } = require('sequelize');
 const { Users } = require('./db/dbObjects.js');
 
+const { Qiwi } = require('./qiwiApi.js')
+const qiwi = new Qiwi(process.env.APIKEY, '79052491162');
+
 // Считывание всех файлов комманд и добавление в коллецию
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
@@ -39,7 +42,7 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	try {
-		await command.execute(client, interaction, Users);
+		await command.execute(client, interaction, qiwi, Users);
 	} catch (error) {
 		console.error(error);
 		await interaction.reply({ content: 'Ошибка при выполнении этой команды!', ephemeral: true });
