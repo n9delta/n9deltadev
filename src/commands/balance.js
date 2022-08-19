@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {
@@ -7,7 +6,7 @@ module.exports = {
 		.setName('balance')
 		.setDescription('Shows wallets balance'),
 	async execute(client, i, qiwi) {
-		let wallets = await qiwi.getTransHistory();
+		let wallets = await qiwi.getWallets();
 
 		let embeds = [];
 		for (const wal of wallets.accounts) {
