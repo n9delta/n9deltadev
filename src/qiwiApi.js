@@ -10,7 +10,7 @@ class Qiwi {
 
 		this.headers = {
 			Accept: 'application/json',
-			content-type: 'application.json',
+			'content-type': 'application.json',
 			Authorization: 'Bearer' + apiKey,
 		};
 
@@ -22,13 +22,21 @@ class Qiwi {
 		};
 	}
 
+	getTransHistory() {
+		let options = {
+			url: `${this.url}/funding-sources/v2/persons/${this.phone}/accounts`,
+		};
+
+		return this.get(options);
+	} 
+
 	async get(options) {
 		if (!options.headers) options.headers = this.headers;
 
 		try {
 			let result = await axios.get(options.url, options);
 
-			return result;
+			return result.data;
 		} catch (err) {
 			throw err;
 		}
@@ -40,7 +48,7 @@ class Qiwi {
 		try {
 			let result = await axios.post(options.url, options.body, options);
 
-			return result;
+			return result.data;
 		} catch (err) {
 			throw err;
 		}
@@ -52,7 +60,7 @@ class Qiwi {
 		try {
 			let result = await axios.put(options.url, options.body, options);
 
-			return result;
+			return result.data;
 		} catch (err) {
 			throw err;
 		}
