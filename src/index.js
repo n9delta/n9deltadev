@@ -53,11 +53,6 @@ client.on('interactionCreate', async interaction => {
 * Обработчик сообщений
 */ 
 client.on('messageCreate', async (msg) => {
-	// Если автор не бот, то запустить эвент с шансом 5%
-	if (!msg.author.bot && (Math.random() > 0.8)) {
-		catchEvent(msg);
-	}
-
 	// Проверка начинает ли с префикса сообщение
 	const prefix = 'e9';
 	if (!msg.content.startsWith(prefix)) return;
