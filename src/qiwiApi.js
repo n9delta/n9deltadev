@@ -22,13 +22,22 @@ class Qiwi {
 		};
 	}
 
-	getTransHistory() {
+	getWallets() {
 		let options = {
 			url: `${this.url}/funding-sources/v2/persons/${this.phone}/accounts`,
 		};
 
 		return this.get(options);
 	} 
+
+	getTransHistory(parameters) {
+		let options = {
+			url: `${this.url}/payment-history/v2/persons/${this.phone}/payments`,
+			params: parameters,
+		};
+
+		return this.get(options);
+	}
 
 	async get(options) {
 		if (!options.headers) options.headers = this.headers;
