@@ -53,7 +53,12 @@ client.on('interactionCreate', async interaction => {
 		await command.execute(client, interaction, qiwi, Users);
 	} catch (error) {
 		console.error(error);
-		await interaction.reply({ content: 'Ошибка при выполнении этой команды!', ephemeral: true });
+		
+		let embed = new MessageEmbed()
+			.setColor('#D0021B')
+			.setDescription('Неизвестная ошибка при выполнение этой команды! Свяжитесь с администратором');
+
+		await interaction.reply({ embeds: [embed], ephemeral: true });
 	}
 });
 
