@@ -41,6 +41,14 @@ client.on('interactionCreate', async interaction => {
 
 	if (!command) return;
 
+	if (!(command.access?.includes(interaction.user.id) || process.env.ADMINS.split(',').includes(interaction.user.id))) {
+		let embed = new MessageEmbed()
+			.setColor('#D0021B')
+			.setDescription('У вас нет прав на выполнение этой команды');
+
+		return interaction.reply({ embeds: [embed], ephemeral: true });
+	}
+
 	try {
 		await command.execute(client, interaction, qiwi, Users);
 	} catch (error) {
@@ -54,6 +62,12 @@ client.on('interactionCreate', async interaction => {
 */ 
 client.on('messageCreate', async (msg) => {
 	// Проверка начинает ли с префикса сообщение
+
+	/*
+	* [DEPRECATED]
+	* Использование команд в таком формате устарело
+	* Рекомендуется использовать слеш команды
+	*/
 	const prefix = 'e9';
 	if (!msg.content.startsWith(prefix)) return;
 

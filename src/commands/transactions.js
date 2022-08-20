@@ -18,6 +18,7 @@ module.exports = {
 					{ name: 'IN', value: 'IN' },
 					{ name: 'OUT', value: 'OUT' },
 				)),
+	access: ['763105344754417726'],
 	async execute(client, i, qiwi) {
 		let transactions = await qiwi.getTransHistory({
 			rows: i.options.getInteger('amount'),
