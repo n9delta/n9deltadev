@@ -9,7 +9,7 @@ const { Op } = require('sequelize');
 const { Users } = require('./db/dbObjects.js');
 
 const { Qiwi } = require('./qiwiApi.js')
-const qiwi = new Qiwi(process.env.APIKEY, '79052491162');
+const qiwi = new Qiwi(process.env.APIKEY, process.env.PHONE);
 
 // Считывание всех файлов комманд и добавление в коллецию
 client.commands = new Collection();
