@@ -3,9 +3,9 @@ const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('ping')
-		.setDescription('Replies with Pong'),
-	async execute(client, i) {
-		i.reply('Pong');
+		.setName('profile')
+		.setDescription('Shows the user profile'),
+	async execute(client, i, qiwi, Users) {
+		i.reply('test');
 	},
 };

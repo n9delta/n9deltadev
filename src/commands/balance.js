@@ -5,6 +5,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('balance')
 		.setDescription('Shows wallets balance'),
+		access: [],
 	async execute(client, i, qiwi) {
 		let wallets = await qiwi.getWallets();
 
