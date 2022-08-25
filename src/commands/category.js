@@ -38,10 +38,10 @@ module.exports = {
 
 			);
 
-		const filter = b => b.user.id == i.user.id;
+		const message = await i.reply({ embeds: [homeEmbed], components: [homeRow], ephemeral: true, fetchReply: true });
+
+		const filter = b => b.user.id == i.user.id && b.message.id == message.id;
 		const collector = i.channel.createMessageComponentCollector({ filter, time: 180000 });
-		
-		await i.reply({ embeds: [homeEmbed], components: [homeRow], ephemeral: true });
 
 		collector.on('collect', async b => {
 			if (b.customId == 'create') {
@@ -418,7 +418,7 @@ module.exports = {
 						.addComponents(
 							emptyButton(),
 							emptyButton(),
-							backButton(`catselect_${productId}`),
+							backButton(`proselect_${productId}`),
 						);
 
 					if (product) {
