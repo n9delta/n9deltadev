@@ -381,6 +381,69 @@ module.exports = {
 				await b.deferUpdate(); return await b.editReply({ embeds: [embed], components: row });
 			}
 
+			if (b.customId.startsWith('prorename')) {
+				const productId = (b.customId.match(IdRegex))[0];
+
+				const renameProduct = new Modal()
+					.setCustomId('renameProduct')
+					.setTitle('Переименование продукта')
+					.addComponents(
+						new MessageActionRow()
+							.addComponents(
+								new TextInputComponent()
+									.setCustomId('name')
+									.setLabel('Новое название')
+									.setMaxLength(32)
+									.setMinLength(2)
+									.setPlaceholder('Пример названия')
+									.setRequired(true)
+									.setStyle('SHORT'),
+							),
+					);
+
+				await b.showModal(renameProduct);
+
+				const modalFilter = b => b.user.id == i.user.id && b.customId == 'renameProduct';
+				const renameProductSubmit = await b.awaitModalSubmit({ filter: modalFilter, time: 60000 });
+
+				if (renameProductSubmit) {
+					const fields = {
+						name: renameProductSubmit.fields.getTextInputValue('name'),
+					};
+
+					let product = await Products.findOne({ where: { name: { [Op.like]: fields.name } } });
+
+					let embed;
+					const row = new MessageActionRow()
+						.addComponents(
+							emptyButton(),
+							emptyButton(),
+							backButton(`catselect_${productId}`),
+						);
+
+					if (product) {
+						embed = errorEmbed('Извините, но продукт с таким именем уже существует');
+					} else {
+						product = await Products.findOne({ where: { id: productId }, include: ['category'] });
+
+						product.name = fields.name;
+						await product.save();
+
+						embed = successEmbed(`Продукт успешно переименован: \`${product.name}\``);
+					}
+
+					await renameProductSubmit.deferUpdate(); return await renameProductSubmit.editReply({ embeds: [embed], components: [row] });
+				}
+			}
+
+			if (b.customId.startsWith('procost')) {
+				
+			}
+
+			if (b.customId.startsWith('prodelete')) {
+				
+			}
+
 			if (b.customId == 'home') {
 				await b.deferUpdate(); return await b.editReply({ embeds: [homeEmbed], components: [homeRow] });
 			}
