@@ -16,7 +16,8 @@ function emptyButton() {
 	return new MessageButton()
 		.setCustomId(String(Math.random()))
 		.setLabel('  ')
-		.setStyle('SECONDARY');
+		.setStyle('SECONDARY')
+		.setDisabled(true);
 }
 
 function backButton(id) {
