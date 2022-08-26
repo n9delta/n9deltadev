@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const { Colors } = require('./helpers/consoleColors.js');
+const { successEmbed, errorEmbed } = require('./helpers/messageBuilders.js');
 
 const { Client, Intents, Collection, MessageEmbed, MessageActionRow, MessageButton, MessageAttachment } = require('discord.js');
 const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES"] });
@@ -51,9 +52,7 @@ client.on('interactionCreate', async interaction => {
 	if (!command) return;
 
 	if (!(command.access?.includes(interaction.user.id) || process.env.ADMINS.split(',').includes(interaction.user.id))) {
-		let embed = new MessageEmbed()
-			.setColor('#D0021B')
-			.setDescription('🔴 У вас нет прав на выполнение этой команды');
+		let embed = errorEmbed('У вас нет прав на выполнение этой команды')
 
 		return interaction.reply({ embeds: [embed], ephemeral: true });
 	}
@@ -63,9 +62,7 @@ client.on('interactionCreate', async interaction => {
 	} catch (error) {
 		console.error(error);
 		
-		let embed = new MessageEmbed()
-			.setColor('#D0021B')
-			.setDescription('🔴 Неизвестная ошибка при выполнение этой команды! Свяжитесь с администратором');
+		let embed = errorEmbed('Неизвестная ошибка при выполнение этой команды! Свяжитесь с администратором')
 
 		await interaction.reply({ embeds: [embed], ephemeral: true });
 	}
